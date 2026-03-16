@@ -43,7 +43,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 13
-  m_BakeOnSceneLoad: 1
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -135,7 +135,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &78116221
 Transform:
@@ -1069,13 +1069,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.8702726, y: -0.11229547, z: 0.23318882, w: 0.4190925}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 128.57199, y: -30, z: 0}
 --- !u!114 &705507996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2370,7 +2370,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 1
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!135 &1209480634
 SphereCollider:
@@ -2455,7 +2455,7 @@ Transform:
   m_GameObject: {fileID: 1209480633}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.669, y: 0.77, z: 2.647}
+  m_LocalPosition: {x: 0.13, y: 0.77, z: 6.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2889,7 +2889,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1441616906
 Transform:
@@ -3395,7 +3395,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!220 &1610757144
 LightProbeGroup:
@@ -3414,13 +3414,25 @@ LightProbeGroup:
   - {x: -2.2660866, y: 1, z: -1}
   - {x: -2.2660866, y: -1, z: 1}
   - {x: -2.2660866, y: -1, z: -1}
-  - {x: -0.3323151, y: -1.1510688, z: 1.6971474}
-  - {x: -0.3323151, y: 0.9567821, z: 1.6971474}
-  - {x: -0.3323151, y: 0.9567821, z: -0.83741856}
-  - {x: -0.3323151, y: -1.2161537, z: -0.83741856}
+  - {x: -0.49862373, y: -1.1510688, z: 1.6971474}
+  - {x: -0.49862373, y: 0.9567821, z: 1.6971474}
+  - {x: -0.49862373, y: 0.9567821, z: -0.83741856}
+  - {x: -0.49862373, y: -1.2161537, z: -0.83741856}
   - {x: -0.3323151, y: -1.0967978, z: 0.47773886}
   - {x: -0.3323151, y: -0.009097695, z: 0.47773886}
   - {x: -0.3323151, y: 0.93286943, z: 0.47773886}
+  - {x: -1.5535189, y: 0.9567821, z: -0.83741856}
+  - {x: -1.5535189, y: -1.2161537, z: -0.83741856}
+  - {x: -1.5535189, y: -1.1510688, z: 1.6971474}
+  - {x: -1.5535189, y: 0.38928258, z: 1.3518524}
+  - {x: -0.061954975, y: 0.9567821, z: -0.83741856}
+  - {x: -0.061954975, y: -1.2161537, z: -0.83741856}
+  - {x: -0.061954975, y: -1.1510688, z: 1.6971474}
+  - {x: -0.061954975, y: 0.9567821, z: 1.6971474}
+  - {x: 0.6521908, y: 0.9567821, z: -0.83741856}
+  - {x: 0.6521908, y: -1.2161537, z: -0.83741856}
+  - {x: 0.6521908, y: -1.1510688, z: 1.6971474}
+  - {x: 0.6521908, y: 0.38928258, z: 1.3518524}
   m_Dering: 1
 --- !u!4 &1610757145
 Transform:
