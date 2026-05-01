@@ -1,370 +1,480 @@
-using System.Collections.Generic;
 using System.Collections;
-using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[System.Serializable]
+public class RoutePoint
+{
+    public Transform destination;
+
+    [Min(0)]
+    public float waitTime = 0f;
+
+    public Color gizmoColor = Color.yellow;
+}
+
 public class CarAI : MonoBehaviour
 {
-    [Header("Car Wheels (Wheel Collider)")]// Assign wheel Colliders through the inspector
+    [Header("Car Wheels - WheelCollider")]
     public WheelCollider frontLeft;
     public WheelCollider frontRight;
     public WheelCollider backLeft;
     public WheelCollider backRight;
 
-    [Header("Car Wheels (Transform)")]// Assign wheel Transform(Mesh render) through the inspector
+    [Header("Car Wheels - Visual Transform")]
     public Transform wheelFL;
     public Transform wheelFR;
     public Transform wheelBL;
     public Transform wheelBR;
 
-    [Header("Car Front (Transform)")]// Assign a Gameobject representing the front of the car
+    [Header("Car Front")]
     public Transform carFront;
 
-    [Header("General Parameters")]// Look at the documentation for a detailed explanation 
-    public List<string> NavMeshLayers;
+    [Header("Movement")]
     public int MaxSteeringAngle = 45;
     public int MaxRPM = 150;
+    public float motorTorque = 400f;
+    public float brakeTorque = 5000f;
+    public float reachDistance = 2f;
+
+    [Header("Route")]
+    public List<RoutePoint> routePoints = new List<RoutePoint>();
+    public bool loopRoute = true;
+
+    [Header("NavMesh")]
+    public List<string> NavMeshLayers = new List<string>() { "AllAreas" };
 
     [Header("Debug")]
-    public bool ShowGizmos;
-    public bool Debugger;
+    public bool ShowGizmos = true;
+    public bool Debugger = false;
 
-    [Header("Destination Parameters")]// Look at the documentation for a detailed explanation
-    public bool Patrol = true;
-    public Transform CustomDestination;
+    [Header("Legacy Compatibility")]
+    [HideInInspector] public bool Patrol = false;
 
-    [HideInInspector] public bool move;// Look at the documentation for a detailed explanation
+    public bool move = true;
 
-    private Vector3 PostionToFollow = Vector3.zero;
-    private int currentWayPoint;
-    private float AIFOV = 60;
-    private bool allowMovement;
-    private int NavMeshLayerBite;
-    private List<Vector3> waypoints = new List<Vector3>();
-    private float LocalMaxSpeed;
-    private int Fails;
-    private float MovementTorque = 1;
+    private readonly List<Vector3> pathPoints = new List<Vector3>();
 
-    void Awake()
+    private int currentRouteIndex = 0;
+    private int currentPathIndex = 0;
+
+    private int navMeshMask = NavMesh.AllAreas;
+    private bool waiting = false;
+    private bool routeFinished = false;
+
+    private Vector3 positionToFollow;
+    private float localMaxSpeed;
+
+    private void Awake()
     {
-        currentWayPoint = 0;
-        allowMovement = true;
-        move = true;
+        if (carFront == null)
+            carFront = transform;
+
+        positionToFollow = carFront.position;
+        CalculateNavMeshMask();
     }
 
-    void Start()
+    private void Start()
     {
-        GetComponent<Rigidbody>().centerOfMass = Vector3.zero;
-        CalculateNavMashLayerBite();
+        Rigidbody rb = GetComponent<Rigidbody>();
+
+        if (rb != null)
+            rb.centerOfMass = Vector3.zero;
+
+        StartRoute();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         UpdateWheels();
-        ApplySteering();
-        PathProgress();
-    }
 
-    private void CalculateNavMashLayerBite()
-    {
-        if (NavMeshLayers == null || NavMeshLayers[0] == "AllAreas")
-            NavMeshLayerBite = NavMesh.AllAreas;
-        else if (NavMeshLayers.Count == 1)
-            NavMeshLayerBite += 1 << NavMesh.GetAreaFromName(NavMeshLayers[0]);
-        else
+        if (!move || waiting || routeFinished)
         {
-            foreach (string Layer in NavMeshLayers)
-            {
-                int I = 1 << NavMesh.GetAreaFromName(Layer);
-                NavMeshLayerBite += I;
-            }
-        }
-    }
-
-    private void PathProgress() //Checks if the agent has reached the currentWayPoint or not. If yes, it will assign the next waypoint as the currentWayPoint depending on the input
-    {
-        wayPointManager();
-        Movement();
-        ListOptimizer();
-
-        void wayPointManager()
-        {
-            if (currentWayPoint >= waypoints.Count)
-                allowMovement = false;
-            else
-            {
-                PostionToFollow = waypoints[currentWayPoint];
-                allowMovement = true;
-                if (Vector3.Distance(carFront.position, PostionToFollow) < 2)
-                    currentWayPoint++;
-            }
-
-            if (currentWayPoint >= waypoints.Count - 3)
-                CreatePath();
-        }
-
-        void CreatePath()
-        {
-            if (CustomDestination == null)
-            {
-                if (Patrol == true)
-                    RandomPath();
-                else
-                {
-                    debug("No custom destination assigned and Patrol is set to false", false);
-                    allowMovement = false;
-                }
-            }
-            else
-               CustomPath(CustomDestination);
-            
-        }
-
-        void ListOptimizer()
-        {
-            if (currentWayPoint > 1 && waypoints.Count > 30)
-            {
-                waypoints.RemoveAt(0);
-                currentWayPoint--;
-            }
-        }
-    }
-
-    public void RandomPath() // Creates a path to a random destination
-    {
-        NavMeshPath path = new NavMeshPath();
-        Vector3 sourcePostion;
-
-        if (waypoints.Count == 0)
-        {
-            Vector3 randomDirection = Random.insideUnitSphere * 100;
-            randomDirection += transform.position;
-            sourcePostion = carFront.position;
-            Calculate(randomDirection, sourcePostion, carFront.forward, NavMeshLayerBite);
-        }
-        else
-        {
-            sourcePostion = waypoints[waypoints.Count - 1];
-            Vector3 randomPostion = Random.insideUnitSphere * 100;
-            randomPostion += sourcePostion;
-            Vector3 direction = (waypoints[waypoints.Count - 1] - waypoints[waypoints.Count - 2]).normalized;
-            Calculate(randomPostion, sourcePostion, direction, NavMeshLayerBite);
-        }
-
-        void Calculate(Vector3 destination, Vector3 sourcePostion, Vector3 direction, int NavMeshAreaByte)
-        {
-            if (NavMesh.SamplePosition(destination, out NavMeshHit hit, 150, 1 << NavMesh.GetAreaFromName(NavMeshLayers[0])) &&
-                NavMesh.CalculatePath(sourcePostion, hit.position, NavMeshAreaByte, path) && path.corners.Length > 2)
-            {
-                if (CheckForAngle(path.corners[1], sourcePostion, direction))
-                {
-                    waypoints.AddRange(path.corners.ToList());
-                    debug("Random Path generated successfully", false);
-                }
-                else
-                {
-                    if (CheckForAngle(path.corners[2], sourcePostion, direction))
-                    {
-                        waypoints.AddRange(path.corners.ToList());
-                        debug("Random Path generated successfully", false);
-                    }
-                    else
-                    {
-                        debug("Failed to generate a random path. Waypoints are outside the AIFOV. Generating a new one", false);
-                        Fails++;
-                    }
-                }
-            }
-            else
-            {
-                debug("Failed to generate a random path. Invalid Path. Generating a new one", false);
-                Fails++;
-            }
-        }
-    }
-
-    public void CustomPath(Transform destination) //Creates a path to the Custom destination
-    {
-        NavMeshPath path = new NavMeshPath();
-        Vector3 sourcePostion;
-
-        if (waypoints.Count == 0)
-        {
-            sourcePostion = carFront.position;
-            Calculate(destination.position, sourcePostion, carFront.forward, NavMeshLayerBite);
-        }
-        else
-        {
-            sourcePostion = waypoints[waypoints.Count - 1];
-            Vector3 direction = (waypoints[waypoints.Count - 1] - waypoints[waypoints.Count - 2]).normalized;
-            Calculate(destination.position, sourcePostion, direction, NavMeshLayerBite);
-        }
-
-        void Calculate(Vector3 destination, Vector3 sourcePostion, Vector3 direction, int NavMeshAreaBite)
-        {
-            if (NavMesh.SamplePosition(destination, out NavMeshHit hit, 150, NavMeshAreaBite) &&
-                NavMesh.CalculatePath(sourcePostion, hit.position, NavMeshAreaBite, path))
-            {
-                if (path.corners.ToList().Count() > 1&& CheckForAngle(path.corners[1], sourcePostion, direction))
-                {
-                    waypoints.AddRange(path.corners.ToList());
-                    debug("Custom Path generated successfully", false);
-                }
-                else
-                {
-                    if (path.corners.Length > 2 && CheckForAngle(path.corners[2], sourcePostion, direction))
-                    {
-                        waypoints.AddRange(path.corners.ToList());
-                        debug("Custom Path generated successfully", false);
-                    }
-                    else
-                    {
-                        debug("Failed to generate a Custom path. Waypoints are outside the AIFOV. Generating a new one", false);
-                        Fails++;
-                    }
-                }
-            }
-            else
-            {
-                debug("Failed to generate a Custom path. Invalid Path. Generating a new one", false);
-                Fails++;
-            }
-        }
-    }
-
-    private bool CheckForAngle(Vector3 pos, Vector3 source, Vector3 direction) //calculates the angle between the car and the waypoint 
-    {
-        Vector3 distance = (pos - source).normalized;
-        float CosAngle = Vector3.Dot(distance, direction);
-        float Angle = Mathf.Acos(CosAngle) * Mathf.Rad2Deg;
-
-        if (Angle < AIFOV)
-            return true;
-        else
-            return false;
-    }
-
-    private void ApplyBrakes() // Apply brake torque 
-    {
-        frontLeft.brakeTorque = 5000;
-        frontRight.brakeTorque = 5000;
-        backLeft.brakeTorque = 5000;
-        backRight.brakeTorque = 5000;
-    }
-
-
-    private void UpdateWheels() // Updates the wheel's postion and rotation
-    {
-        ApplyRotationAndPostion(frontLeft, wheelFL);
-        ApplyRotationAndPostion(frontRight, wheelFR);
-        ApplyRotationAndPostion(backLeft, wheelBL);
-        ApplyRotationAndPostion(backRight, wheelBR);
-    }
-
-    private void ApplyRotationAndPostion(WheelCollider targetWheel, Transform wheel) // Updates the wheel's postion and rotation
-    {
-        targetWheel.ConfigureVehicleSubsteps(5, 12, 15);
-
-        Vector3 pos;
-        Quaternion rot;
-        targetWheel.GetWorldPose(out pos, out rot);
-        wheel.position = pos;
-        wheel.rotation = rot;
-    }
-
-    void ApplySteering() // Applies steering to the Current waypoint
-    {
-        Vector3 relativeVector = transform.InverseTransformPoint(PostionToFollow);
-        float SteeringAngle = (relativeVector.x / relativeVector.magnitude) * MaxSteeringAngle;
-        if (SteeringAngle > 15) LocalMaxSpeed = 100;
-        else LocalMaxSpeed = MaxRPM;
-
-        frontLeft.steerAngle = SteeringAngle;
-        frontRight.steerAngle = SteeringAngle;
-    }
-
-    void Movement() // moves the car forward and backward depending on the input
-    {
-        if (move == true && allowMovement == true)
-            allowMovement = true;
-        else
-            allowMovement = false;
-
-        if (allowMovement == true)
-        {
-            frontLeft.brakeTorque = 0;
-            frontRight.brakeTorque = 0;
-            backLeft.brakeTorque = 0;
-            backRight.brakeTorque = 0;
-
-            int SpeedOfWheels = (int)((frontLeft.rpm + frontRight.rpm + backLeft.rpm + backRight.rpm) / 4);
-
-            if (SpeedOfWheels < LocalMaxSpeed)
-            {
-                backRight.motorTorque = 400 * MovementTorque;
-                backLeft.motorTorque = 400 * MovementTorque;
-                frontRight.motorTorque = 400 * MovementTorque;
-                frontLeft.motorTorque = 400 * MovementTorque;
-            }
-            else if (SpeedOfWheels < LocalMaxSpeed + (LocalMaxSpeed * 1 / 4))
-            {
-                backRight.motorTorque = 0;
-                backLeft.motorTorque = 0;
-                frontRight.motorTorque = 0;
-                frontLeft.motorTorque = 0;
-            }
-            else
-                ApplyBrakes();
-            
-        }
-        else
             ApplyBrakes();
+            return;
+        }
+
+        FollowRoute();
+        ApplySteering();
+        Movement();
     }
 
-    void debug(string text, bool IsCritical)
+    private void StartRoute()
     {
-        if (Debugger)
+        CalculateNavMeshMask();
+
+        currentRouteIndex = 0;
+        currentPathIndex = 0;
+        routeFinished = false;
+        waiting = false;
+
+        if (!HasValidRoute())
         {
-            if (IsCritical)
-                Debug.LogError(text);
-            else
-                Debug.Log(text);
+            DebugMessage("No hay puntos de ruta válidos.", true);
+            routeFinished = true;
+            return;
+        }
+
+        GeneratePathToCurrentRoutePoint();
+    }
+
+    private bool HasValidRoute()
+    {
+        if (routePoints == null || routePoints.Count == 0)
+            return false;
+
+        foreach (RoutePoint point in routePoints)
+        {
+            if (point != null && point.destination != null)
+                return true;
+        }
+
+        return false;
+    }
+
+    private void FollowRoute()
+    {
+        if (pathPoints.Count == 0)
+        {
+            ArriveToRoutePoint();
+            return;
+        }
+
+        if (currentPathIndex >= pathPoints.Count)
+        {
+            ArriveToRoutePoint();
+            return;
+        }
+
+        positionToFollow = pathPoints[currentPathIndex];
+
+        float distance = Vector3.Distance(carFront.position, positionToFollow);
+
+        if (distance <= reachDistance)
+            currentPathIndex++;
+
+        Transform finalDestination = routePoints[currentRouteIndex].destination;
+
+        if (finalDestination != null)
+        {
+            float finalDistance = Vector3.Distance(carFront.position, finalDestination.position);
+
+            if (finalDistance <= reachDistance)
+                ArriveToRoutePoint();
         }
     }
 
-    private void OnDrawGizmos() // shows a Gizmos representing the waypoints and AI FOV
+    private void ArriveToRoutePoint()
     {
-        if (ShowGizmos == true)
+        if (!waiting)
+            StartCoroutine(WaitAndGoNextPoint());
+    }
+
+    private IEnumerator WaitAndGoNextPoint()
+    {
+        waiting = true;
+        ApplyBrakes();
+
+        RoutePoint point = routePoints[currentRouteIndex];
+
+        if (point.waitTime > 0f)
+            yield return new WaitForSeconds(point.waitTime);
+
+        currentRouteIndex++;
+
+        if (currentRouteIndex >= routePoints.Count)
         {
-            for (int i = 0; i < waypoints.Count; i++)
+            if (loopRoute)
             {
-                if (i == currentWayPoint)
-                    Gizmos.color = Color.blue;
-                else
-                {
-                    if (i > currentWayPoint)
-                        Gizmos.color = Color.red;
-                    else
-                        Gizmos.color = Color.green;
-                }
-                Gizmos.DrawWireSphere(waypoints[i], 2f);
+                currentRouteIndex = 0;
             }
-            CalculateFOV();
+            else
+            {
+                routeFinished = true;
+                waiting = false;
+                ApplyBrakes();
+                yield break;
+            }
         }
 
-        void CalculateFOV()
+        GeneratePathToCurrentRoutePoint();
+        waiting = false;
+    }
+
+    private void GeneratePathToCurrentRoutePoint()
+    {
+        pathPoints.Clear();
+        currentPathIndex = 0;
+
+        if (currentRouteIndex < 0 || currentRouteIndex >= routePoints.Count)
         {
-            Gizmos.color = Color.white;
-            float totalFOV = AIFOV * 2;
-            float rayRange = 10.0f;
-            float halfFOV = totalFOV / 2.0f;
-            Quaternion leftRayRotation = Quaternion.AngleAxis(-halfFOV, Vector3.up);
-            Quaternion rightRayRotation = Quaternion.AngleAxis(halfFOV, Vector3.up);
-            Vector3 leftRayDirection = leftRayRotation * transform.forward;
-            Vector3 rightRayDirection = rightRayRotation * transform.forward;
-            Gizmos.DrawRay(carFront.position, leftRayDirection * rayRange);
-            Gizmos.DrawRay(carFront.position, rightRayDirection * rayRange);
+            move = false;
+            return;
+        }
+
+        Transform destination = routePoints[currentRouteIndex].destination;
+
+        if (destination == null)
+        {
+            DebugMessage("Hay un punto de ruta sin destination asignado.", true);
+            routeFinished = true;
+            move = false;
+            return;
+        }
+
+        NavMeshPath navPath = new NavMeshPath();
+
+        bool sourceFound = NavMesh.SamplePosition(
+            carFront.position,
+            out NavMeshHit sourceHit,
+            10f,
+            navMeshMask
+        );
+
+        bool destinationFound = NavMesh.SamplePosition(
+            destination.position,
+            out NavMeshHit destinationHit,
+            10f,
+            navMeshMask
+        );
+
+        if (!sourceFound || !destinationFound)
+        {
+            DebugMessage("No se pudo encontrar posición válida en el NavMesh.", true);
+            routeFinished = true;
+            return;
+        }
+
+        bool pathFound = NavMesh.CalculatePath(
+            sourceHit.position,
+            destinationHit.position,
+            navMeshMask,
+            navPath
+        );
+
+        if (!pathFound || navPath.status != NavMeshPathStatus.PathComplete || navPath.corners.Length == 0)
+        {
+            DebugMessage("No se pudo calcular una ruta completa.", true);
+            routeFinished = true;
+            return;
+        }
+
+        pathPoints.Clear();
+        pathPoints.Add(destination.position);
+        positionToFollow = destination.position;
+
+        Debug.Log("Ruta generada hacia punto " + currentRouteIndex);
+    }
+
+    private void CalculateNavMeshMask()
+    {
+        navMeshMask = 0;
+
+        if (NavMeshLayers == null || NavMeshLayers.Count == 0)
+        {
+            navMeshMask = NavMesh.AllAreas;
+            return;
+        }
+
+        if (NavMeshLayers.Contains("AllAreas"))
+        {
+            navMeshMask = NavMesh.AllAreas;
+            return;
+        }
+
+        foreach (string layer in NavMeshLayers)
+        {
+            int area = NavMesh.GetAreaFromName(layer);
+
+            if (area >= 0)
+                navMeshMask |= 1 << area;
+        }
+
+        if (navMeshMask == 0)
+            navMeshMask = NavMesh.AllAreas;
+    }
+
+    private void ApplySteering()
+    {
+        Vector3 relativeVector = transform.InverseTransformPoint(positionToFollow);
+
+        if (relativeVector.magnitude < 0.1f)
+            return;
+
+        float steeringAngle = (relativeVector.x / relativeVector.magnitude) * MaxSteeringAngle;
+        steeringAngle = Mathf.Clamp(steeringAngle, -MaxSteeringAngle, MaxSteeringAngle);
+
+        localMaxSpeed = Mathf.Abs(steeringAngle) > 15f ? MaxRPM * 0.6f : MaxRPM;
+
+        frontLeft.steerAngle = steeringAngle;
+        frontRight.steerAngle = steeringAngle;
+    }
+
+    private void Movement()
+    {
+        ReleaseBrakes();
+
+        int wheelSpeed = Mathf.Abs((int)(
+            frontLeft.rpm +
+            frontRight.rpm +
+            backLeft.rpm +
+            backRight.rpm
+        ) / 4);
+
+        if (wheelSpeed < localMaxSpeed)
+            SetMotorTorque(motorTorque);
+        else
+            SetMotorTorque(0f);
+    }
+
+    private void SetMotorTorque(float torque)
+    {
+        frontLeft.motorTorque = torque;
+        frontRight.motorTorque = torque;
+        backLeft.motorTorque = torque;
+        backRight.motorTorque = torque;
+    }
+
+    private void ReleaseBrakes()
+    {
+        frontLeft.brakeTorque = 0f;
+        frontRight.brakeTorque = 0f;
+        backLeft.brakeTorque = 0f;
+        backRight.brakeTorque = 0f;
+    }
+
+    private void ApplyBrakes()
+    {
+        SetMotorTorque(0f);
+
+        frontLeft.brakeTorque = brakeTorque;
+        frontRight.brakeTorque = brakeTorque;
+        backLeft.brakeTorque = brakeTorque;
+        backRight.brakeTorque = brakeTorque;
+    }
+
+    private void UpdateWheels()
+    {
+        UpdateWheel(frontLeft, wheelFL);
+        UpdateWheel(frontRight, wheelFR);
+        UpdateWheel(backLeft, wheelBL);
+        UpdateWheel(backRight, wheelBR);
+    }
+
+    private void UpdateWheel(WheelCollider wheelCollider, Transform wheelTransform)
+    {
+        if (wheelCollider == null || wheelTransform == null)
+            return;
+
+        wheelCollider.ConfigureVehicleSubsteps(5, 12, 15);
+
+        wheelCollider.GetWorldPose(out Vector3 position, out Quaternion rotation);
+
+        wheelTransform.position = position;
+        wheelTransform.rotation = rotation;
+    }
+
+    public void RestartRoute()
+    {
+        StopAllCoroutines();
+        StartRoute();
+    }
+
+    public void RandomPath()
+    {
+        DebugMessage("RandomPath() llamado, pero esta IA ahora usa solo routePoints. Reiniciando ruta.", false);
+        RestartRoute();
+    }
+
+    public void CustomPath(Transform destination)
+    {
+        if (destination == null)
+        {
+            DebugMessage("CustomPath() recibió un destino null.", true);
+            return;
+        }
+
+        StopAllCoroutines();
+
+        routePoints.Clear();
+
+        RoutePoint newPoint = new RoutePoint();
+        newPoint.destination = destination;
+        newPoint.waitTime = 0f;
+        newPoint.gizmoColor = Color.yellow;
+
+        routePoints.Add(newPoint);
+
+        loopRoute = false;
+        RestartRoute();
+    }
+
+    private void DebugMessage(string message, bool error)
+    {
+        if (!Debugger)
+            return;
+
+        if (error)
+            Debug.LogError(message, this);
+        else
+            Debug.Log(message, this);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!ShowGizmos)
+            return;
+
+        if (routePoints != null)
+        {
+            for (int i = 0; i < routePoints.Count; i++)
+            {
+                RoutePoint point = routePoints[i];
+
+                if (point == null || point.destination == null)
+                    continue;
+
+                Gizmos.color = point.gizmoColor;
+                Gizmos.DrawWireSphere(point.destination.position, 3f);
+
+                if (i == currentRouteIndex)
+                {
+                    Gizmos.color = Color.white;
+                    Gizmos.DrawWireSphere(point.destination.position, 4f);
+                }
+
+                int nextIndex = i + 1;
+
+                if (nextIndex >= routePoints.Count)
+                {
+                    if (!loopRoute)
+                        continue;
+
+                    nextIndex = 0;
+                }
+
+                if (routePoints[nextIndex] != null && routePoints[nextIndex].destination != null)
+                {
+                    Gizmos.color = Color.cyan;
+                    Gizmos.DrawLine(
+                        point.destination.position,
+                        routePoints[nextIndex].destination.position
+                    );
+                }
+            }
+        }
+
+        if (pathPoints != null)
+        {
+            for (int i = 0; i < pathPoints.Count; i++)
+            {
+                Gizmos.color = i == currentPathIndex ? Color.blue : Color.red;
+                Gizmos.DrawWireSphere(pathPoints[i], 1.5f);
+
+                if (i < pathPoints.Count - 1)
+                    Gizmos.DrawLine(pathPoints[i], pathPoints[i + 1]);
+            }
         }
     }
 }
