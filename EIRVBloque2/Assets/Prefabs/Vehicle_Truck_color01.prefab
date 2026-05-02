@@ -113,15 +113,19 @@ MonoBehaviour:
   wheelBL: {fileID: 7342644561988798419}
   wheelBR: {fileID: 8472911157464065640}
   carFront: {fileID: 1144804050020918071}
-  NavMeshLayers:
-  - Walkable
   MaxSteeringAngle: 45
   MaxRPM: 100
+  motorTorque: 400
+  brakeTorque: 5000
+  reachDistance: 2
+  routePoints: []
+  loopRoute: 1
+  NavMeshLayers:
+  - Walkable
   ShowGizmos: 1
   Debugger: 0
   Patrol: 1
-  CustomDestination: {fileID: 0}
-  move: 0
+  move: 1
 --- !u!65 &1614245612944919001
 BoxCollider:
   m_ObjectHideFlags: 0
