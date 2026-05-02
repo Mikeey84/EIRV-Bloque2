@@ -14194,6 +14194,7 @@ Transform:
   - {fileID: 2005662907}
   - {fileID: 1271852860}
   - {fileID: 540358845}
+  - {fileID: 884276121}
   m_Father: {fileID: 976058309}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &536317079
@@ -14441,7 +14442,7 @@ Transform:
   m_GameObject: {fileID: 540358844}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -126.5, y: 49.47, z: -33.7}
+  m_LocalPosition: {x: -127.04, y: 49.47, z: -46.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23032,6 +23033,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fa324388c16b5c4eac9846338b35b17, type: 3}
+--- !u!1 &884276120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 884276121}
+  m_Layer: 0
+  m_Name: 1 (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &884276121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884276120}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -73.5, y: 49.47, z: -50.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 536039342}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &884854962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39046,7 +39078,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 120.45787
+      value: 116.641556
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -39054,19 +39086,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 212.84592
+      value: 213.02058
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.022163756
+      value: -0.0071556414
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9997544
+      value: 0.9999744
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: m_LocalRotation.z
@@ -39078,7 +39110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 182.54
+      value: 180.82
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -39101,8 +39133,12 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9170518569825581107, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
+      propertyPath: MaxSteeringAngle
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 9170518569825581107, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: routePoints.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9170518569825581107, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: routePoints.Array.data[0].waitTime
@@ -39131,7 +39167,7 @@ PrefabInstance:
     - target: {fileID: 9170518569825581107, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: routePoints.Array.data[4].destination
       value: 
-      objectReference: {fileID: 2008983517}
+      objectReference: {fileID: 884276121}
     - target: {fileID: 9170518569825581107, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: routePoints.Array.data[0].gizmoColor.b
       value: 0
