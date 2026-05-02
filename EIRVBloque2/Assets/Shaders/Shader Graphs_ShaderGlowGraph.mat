@@ -52,7 +52,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Glow: 1
-    - _Outline_scale: 1.06
+    - _Outline_scale: 1.03
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
