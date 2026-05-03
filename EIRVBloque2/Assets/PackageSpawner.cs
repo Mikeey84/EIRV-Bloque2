@@ -15,12 +15,12 @@ public class PackageSpawner : MonoBehaviour
 
     void Start()
     {
-        //SpawnPackage();
+        SpawnPackage();
     }
 
     void Update()
     {
-        SpawnPackage();
+        //SpawnPackage();
     }
 
     void SpawnPackage()
