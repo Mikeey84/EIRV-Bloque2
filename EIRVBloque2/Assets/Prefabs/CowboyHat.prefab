@@ -68,9 +68,6 @@ PrefabInstance:
       addedObject: {fileID: 4557502193990409789}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: a0dfaf0497ab5334a99165f16b697e6e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6532172078962577365}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: a0dfaf0497ab5334a99165f16b697e6e, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 6428444048389319584}
   m_SourcePrefab: {fileID: 100100000, guid: a0dfaf0497ab5334a99165f16b697e6e, type: 3}
 --- !u!1 &1660767052819017190 stripped
@@ -227,22 +224,6 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 0
---- !u!114 &6532172078962577365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1660767052819017190}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 991c69b8a1b6a444a9177914f77cf7d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TintColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  m_TintOnHover: 1
-  m_TintOnSelection: 0
-  m_TintRenderers: []
 --- !u!65 &6428444048389319584
 BoxCollider:
   m_ObjectHideFlags: 0
