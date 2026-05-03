@@ -6991,9 +6991,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1510962309}
-        m_TargetAssemblyTypeName: FadeManager, Assembly-CSharp
-        m_MethodName: IniciarReinicioDeNivel
+      - m_Target: {fileID: 3118604674987871897}
+        m_TargetAssemblyTypeName: CanvaManager, Assembly-CSharp
+        m_MethodName: MostrarCanvaJuego
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -40793,15 +40793,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8273696704782084070, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: Loop
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8273696704782084070, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: m_Volume
       value: 0.304
       objectReference: {fileID: 0}
     - target: {fileID: 8273696704782084070, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8273696704782084070, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8273696704782084070, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
+      propertyPath: MaxDistance
+      value: 6.500001
+      objectReference: {fileID: 0}
+    - target: {fileID: 8273696704782084070, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: MinDistance
       value: 6.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8273696704782084070, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8273696704782084070, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
+      propertyPath: BypassListenerEffects
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9170518569825581107, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: move
@@ -60896,7 +60916,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3070915660016045462, guid: 7bb34003224250a40a79cbb5f5f1ab5e, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4906866111348463935, guid: 7bb34003224250a40a79cbb5f5f1ab5e, type: 3}
       propertyPath: m_Name
@@ -60904,7 +60924,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5498730116239063905, guid: 7bb34003224250a40a79cbb5f5f1ab5e, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
