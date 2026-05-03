@@ -112,6 +112,14 @@ PrefabInstance:
       propertyPath: m_Resource
       value: 
       objectReference: {fileID: 8300000, guid: b9b7157cfbc57744db236781a08902a3, type: 3}
+    - target: {fileID: 8273696704782084070, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
+      propertyPath: MaxDistance
+      value: 10.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 8273696704782084070, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
+      propertyPath: MinDistance
+      value: 4.4
+      objectReference: {fileID: 0}
     - target: {fileID: 8472911157464065640, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: m_LocalPosition.z
       value: -2.7700005

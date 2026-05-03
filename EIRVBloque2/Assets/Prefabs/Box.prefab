@@ -277,6 +277,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -8391222552659086748, guid: 37c31e2dad5c63447972faa653b2742c, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -5477749408508380018, guid: 37c31e2dad5c63447972faa653b2742c, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.17
@@ -300,6 +304,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 37c31e2dad5c63447972faa653b2742c, type: 3}
       propertyPath: m_Name
       value: Box
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 37c31e2dad5c63447972faa653b2742c, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
