@@ -1,15 +1,16 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class PackageSpawner : MonoBehaviour
 {
-    [Header("Configuraci�n")]
-    public GameObject packagePrefab;        // Tu prefab del paquete
-    public Transform spawnPoint;            // Donde aparece el nuevo paquete
+    [Header("Configuración")]
+    public GameObject packagePrefab;     
+    public Transform spawnPoint;         
 
-    [Header("Animaci�n de spawn")]
-    public float scaleUpDuration = 0.3f;    // Tiempo de animaci�n de aparici�n
+    [Header("Animación de spawn")]
+    public float scaleUpDuration = 0.3f; 
 
     private GameObject currentPackage;
 
@@ -18,51 +19,63 @@ public class PackageSpawner : MonoBehaviour
         SpawnPackage();
     }
 
-    void Update()
-    {
-        //SpawnPackage();
-    }
-
     void SpawnPackage()
     {
         if (currentPackage != null) return;
 
         currentPackage = Instantiate(packagePrefab, spawnPoint.position, spawnPoint.rotation);
 
-        // Suscribirse al evento de cuando el jugador lo agarra
         XRGrabInteractable grab = currentPackage.GetComponent<XRGrabInteractable>();
         if (grab != null)
         {
             grab.selectEntered.AddListener(OnPackageGrabbed);
+            grab.selectExited.AddListener(OnPackageReleased);
         }
 
-        // Animaci�n de aparici�n
         StartCoroutine(ScaleUp(currentPackage));
     }
 
     void OnPackageGrabbed(SelectEnterEventArgs args)
     {
-        // Desuscribirse para no llamarlo dos veces
-        XRGrabInteractable grab = currentPackage.GetComponent<XRGrabInteractable>();
+        XRGrabInteractable grab = args.interactableObject.transform.GetComponent<XRGrabInteractable>();
         if (grab != null)
         {
+            // Activar trigger en TODOS los colliders
+            foreach (Collider col in grab.GetComponentsInChildren<Collider>())
+            {
+                col.isTrigger = true;
+            }
+
             grab.selectEntered.RemoveListener(OnPackageGrabbed);
         }
 
-        // El paquete actual ya no es "el de la furgoneta"
         currentPackage = null;
 
-        // Instanciar uno nuevo tras un peque�o delay
         StartCoroutine(SpawnAfterDelay(2f));
     }
 
-    System.Collections.IEnumerator SpawnAfterDelay(float delay)
+    void OnPackageReleased(SelectExitEventArgs args)
+    {
+        XRGrabInteractable grab = args.interactableObject.transform.GetComponent<XRGrabInteractable>();
+        if (grab != null)
+        {
+            // Volver a collider normal
+            foreach (Collider col in grab.GetComponentsInChildren<Collider>())
+            {
+                col.isTrigger = false;
+            }
+
+            grab.selectExited.RemoveListener(OnPackageReleased);
+        }
+    }
+
+    IEnumerator SpawnAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         SpawnPackage();
     }
 
-    System.Collections.IEnumerator ScaleUp(GameObject obj)
+    IEnumerator ScaleUp(GameObject obj)
     {
         float elapsed = 0f;
         obj.transform.localScale = Vector3.zero;
@@ -71,7 +84,6 @@ public class PackageSpawner : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float t = elapsed / scaleUpDuration;
-            // Curva de rebote suave
             float scale = Mathf.SmoothStep(0f, 1f, t);
             obj.transform.localScale = Vector3.one * scale;
             yield return null;
