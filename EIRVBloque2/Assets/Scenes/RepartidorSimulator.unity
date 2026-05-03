@@ -40791,6 +40791,18 @@ PrefabInstance:
       propertyPath: m_ExcludeLayers.m_Bits
       value: 128
       objectReference: {fileID: 0}
+    - target: {fileID: 8273696704782084070, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8273696704782084070, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
+      propertyPath: m_Volume
+      value: 0.304
+      objectReference: {fileID: 0}
+    - target: {fileID: 8273696704782084070, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
+      propertyPath: MinDistance
+      value: 6.5
+      objectReference: {fileID: 0}
     - target: {fileID: 9170518569825581107, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: move
       value: 1
