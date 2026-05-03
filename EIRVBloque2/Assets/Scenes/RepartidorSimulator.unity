@@ -63612,7 +63612,7 @@ MonoBehaviour:
   - {fileID: 1578745995}
   - {fileID: 1448761270}
   - {fileID: 1578745984}
-  reproductorAudio2: {fileID: 0}
+  reproductorAudio2: {fileID: 3118604674987871898}
 --- !u!82 &3118604674987871898
 AudioSource:
   m_ObjectHideFlags: 0
