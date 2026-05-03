@@ -14,7 +14,6 @@ public class CanvaManager : MonoBehaviour
     public List<CarAI> objetosJuego;
 
     [Header("Audio")]
-    public AudioClip sonidoBotonEmpezar; // Arrastra aquí tu sonido
     private AudioSource reproductorAudio;
 
     private void Awake()
@@ -39,14 +38,12 @@ public class CanvaManager : MonoBehaviour
         canvaJuego.SetActive(false);
         canvaFinal.SetActive(false);
     }
-    
+    public void PlaySound()
+    {
+        reproductorAudio.Play();
+    }
     public void MostrarCanvaJuego()
     {
-        // 1. Reproducimos el sonido de confirmación al darle a Empezar
-        if (sonidoBotonEmpezar != null)
-        {
-            reproductorAudio.PlayOneShot(sonidoBotonEmpezar);
-        }
 
         // 2. Cambiamos las pantallas
         canvaInicio.SetActive(false);
@@ -66,4 +63,5 @@ public class CanvaManager : MonoBehaviour
         canvaJuego.SetActive(false);
         canvaFinal.SetActive(true);
     }
+
 }
