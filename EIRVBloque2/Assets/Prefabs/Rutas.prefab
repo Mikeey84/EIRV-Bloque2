@@ -1519,6 +1519,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2941281668696815190}
     m_Modifications:
     - target: {fileID: 3187419201059140738, guid: 95831ae2bcc0e144793748b202d76ee7, type: 3}
+      propertyPath: MaxSteeringAngle
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 3187419201059140738, guid: 95831ae2bcc0e144793748b202d76ee7, type: 3}
       propertyPath: routePoints.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -1858,6 +1862,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2941281668696815190}
     m_Modifications:
+    - target: {fileID: 3187419201059140738, guid: ba21ab193fd5cff4f945e3adb48791fd, type: 3}
+      propertyPath: MaxSteeringAngle
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 3187419201059140738, guid: ba21ab193fd5cff4f945e3adb48791fd, type: 3}
       propertyPath: routePoints.Array.size
       value: 4
@@ -2203,6 +2211,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2941281668696815190}
     m_Modifications:
     - target: {fileID: 3187419201059140738, guid: 3782dcd956a6c2f418bba9ae4a991aff, type: 3}
+      propertyPath: MaxSteeringAngle
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 3187419201059140738, guid: 3782dcd956a6c2f418bba9ae4a991aff, type: 3}
       propertyPath: routePoints.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -2501,6 +2513,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9170518569825581107, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
+      propertyPath: MaxSteeringAngle
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 9170518569825581107, guid: eb04baa9222e7e14dbbe2cde895ff16e, type: 3}
       propertyPath: routePoints.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -2538,6 +2554,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2941281668696815190}
     m_Modifications:
+    - target: {fileID: 3187419201059140738, guid: 96e829acd4d55614e810d7b89b3774c7, type: 3}
+      propertyPath: MaxSteeringAngle
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 3187419201059140738, guid: 96e829acd4d55614e810d7b89b3774c7, type: 3}
       propertyPath: routePoints.Array.size
       value: 4
