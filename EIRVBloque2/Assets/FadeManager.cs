@@ -5,25 +5,40 @@ using System.Collections;
 
 public class FadeManager : MonoBehaviour
 {
+    [Header("Referencias")]
     public CanvasGroup faderGroup;
+    
+    [Header("Tiempos")]
     public float duracionFade = 1.0f;
-    public float esperaEnNegro = 0.5f; // El tiempo extra que pediste
+    public float esperaAlInicio = 1.5f; // Segundos en negro al cargar la escena
+    public float esperaEnNegro = 0.5f;  // Segundos en negro antes de recargar
 
     private void Start()
     {
-        // Al empezar, siempre hacemos que aparezca desde negro
+        // Al empezar, iniciamos la rutina que aguanta en negro y luego revela el juego
         if (faderGroup != null)
         {
-            faderGroup.alpha = 1f;
-            StartCoroutine(RutinaFade(1f, 0f));
+            StartCoroutine(RutinaAclararConEspera());
         }
     }
 
+    // Llama a esta función desde el botón "Reiniciar" de tu interfaz
     public void IniciarReinicioDeNivel()
     {
-        // Detenemos cualquier fade que se esté ejecutando para que no haya conflictos
         StopAllCoroutines();
         StartCoroutine(RutinaFadeYRecargar());
+    }
+
+    private IEnumerator RutinaAclararConEspera()
+    {
+        // 1. Pantalla negra absoluta inmediata
+        faderGroup.alpha = 1f;
+
+        // 2. Esperamos en negro el tiempo configurado
+        yield return new WaitForSeconds(esperaAlInicio);
+
+        // 3. Hacemos el Fade Out (de negro a transparente)
+        yield return StartCoroutine(RutinaFade(1f, 0f));
     }
 
     private IEnumerator RutinaFade(float inicioAlpha, float finAlpha)
@@ -40,16 +55,16 @@ public class FadeManager : MonoBehaviour
 
     private IEnumerator RutinaFadeYRecargar()
     {
-        // 1. Fade a negro
+        // 1. Hacemos el Fade In (hacia el negro total)
         yield return StartCoroutine(RutinaFade(faderGroup.alpha, 1f));
 
-        // 2. BLOQUEO DE SEGURIDAD: Forzamos el alfa a 1 
+        // 2. Bloqueo de seguridad al 100% de negro
         faderGroup.alpha = 1f;
 
-        // 3. ESPERA EXTRA: Lo que necesitabas para que el ojo no note el salto
+        // 3. Esperamos el tiempo de seguridad para ocultar tirones
         yield return new WaitForSeconds(esperaEnNegro);
 
-        // 4. CARGA: Recargamos la escena
+        // 4. Recargamos la escena limpia
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
