@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7276623729492362656}
   - component: {fileID: 4862475717103044055}
   - component: {fileID: 5491901855066260608}
+  - component: {fileID: 8390808717480825119}
   m_Layer: 0
   m_Name: paquete
   m_TagString: paquetes
@@ -136,7 +137,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &5491901855066260608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,3 +260,16 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 0
+--- !u!114 &8390808717480825119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2629152244880543890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7c0b1d0d0b0991428884dcd16be4a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overlayMaterial: {fileID: 2100000, guid: f3559d9a1d597eb4083d5c70259ce506, type: 2}
