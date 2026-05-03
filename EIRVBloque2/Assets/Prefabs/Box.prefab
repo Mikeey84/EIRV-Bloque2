@@ -198,8 +198,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0d0c208e2c632f408e07a66ce1fb25c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  packagePrefab: {fileID: 2629152244880543890, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+  packagePrefabs:
+  - {fileID: 3040434571298875912, guid: fab5873f297894142a1f38d69bef0d24, type: 3}
+  - {fileID: 3040434571298875912, guid: 52253adcd8b19de469d98292ca1ab18f, type: 3}
+  - {fileID: 3040434571298875912, guid: 5bf683fa51cb4f04fa90c6fe371935a2, type: 3}
+  - {fileID: 3040434571298875912, guid: b2dab118c8c9e704c8b59e4d6533dcfd, type: 3}
+  - {fileID: 3040434571298875912, guid: 6bacff244d02c87479284d30b349b516, type: 3}
+  - {fileID: 3040434571298875912, guid: ef5c28fd7b6cfa443af2e4b3c4c17190, type: 3}
+  - {fileID: 3040434571298875912, guid: a4cc337ddd87fd8449e79fee42c57cf9, type: 3}
+  - {fileID: 3040434571298875912, guid: 851cf9599ff956a40a2d5afde4ac4dab, type: 3}
+  - {fileID: 3040434571298875912, guid: fcab9fccb9be8ae47b217ccccf4ad749, type: 3}
   spawnPoint: {fileID: 7898626176026290861}
+  truck: {fileID: 0}
   scaleUpDuration: 0.3
   spawnDelay: 2
 --- !u!1001 &2380563990600030450

@@ -1,10 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PackageSpawner : MonoBehaviour
 {
     [Header("Configuración")]
-    public GameObject packagePrefab;
+    public List<GameObject> packagePrefabs;
     public Transform spawnPoint;
 
     public GameObject truck;
@@ -35,6 +36,8 @@ public class PackageSpawner : MonoBehaviour
     {
         if (currentPackage != null) return;
 
+        int randomIndex = Random.Range(0, packagePrefabs.Count);
+        GameObject packagePrefab = packagePrefabs[randomIndex];
         currentPackage = Instantiate(packagePrefab, spawnPoint.position, spawnPoint.rotation);
         currentPackage.transform.parent = truck.transform;
         StartCoroutine(ScaleUp(currentPackage));
