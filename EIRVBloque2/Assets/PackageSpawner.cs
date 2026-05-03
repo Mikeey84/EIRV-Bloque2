@@ -53,7 +53,7 @@ public class PackageSpawner : MonoBehaviour
         currentPackage = null;
 
         // Instanciar uno nuevo tras un peque�o delay
-        StartCoroutine(SpawnAfterDelay(0.5f));
+        StartCoroutine(SpawnAfterDelay(2f));
     }
 
     System.Collections.IEnumerator SpawnAfterDelay(float delay)
