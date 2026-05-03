@@ -5,57 +5,51 @@ using System.Collections;
 
 public class FadeManager : MonoBehaviour
 {
-    [Header("Configuración")]
-    [Tooltip("Arrastra aquí el Canvas Group de tu Pantalla Negra")]
     public CanvasGroup faderGroup;
-    
-    [Tooltip("Tiempo en segundos que tarda en hacer el fundido")]
-    public float duracionFade = 1.5f;
+    public float duracionFade = 1.0f;
+    public float esperaEnNegro = 0.5f; // El tiempo extra que pediste
 
     private void Start()
     {
-        // Al arrancar la escena, forzamos que la pantalla esté negra (alpha 1)
+        // Al empezar, siempre hacemos que aparezca desde negro
         if (faderGroup != null)
         {
             faderGroup.alpha = 1f;
-            // Y automáticamente iniciamos el Fade Out (hacerla transparente)
             StartCoroutine(RutinaFade(1f, 0f));
         }
     }
 
-    // Esta es la función que conectarás a tu botón de REINICIAR
     public void IniciarReinicioDeNivel()
     {
+        // Detenemos cualquier fade que se esté ejecutando para que no haya conflictos
+        StopAllCoroutines();
         StartCoroutine(RutinaFadeYRecargar());
     }
 
-    // Corrutina general para animar el alpha
     private IEnumerator RutinaFade(float inicioAlpha, float finAlpha)
     {
         float tiempoPasado = 0f;
-
         while (tiempoPasado < duracionFade)
         {
             tiempoPasado += Time.deltaTime;
-            // Interpola suavemente el valor entre inicio y fin
             faderGroup.alpha = Mathf.Lerp(inicioAlpha, finAlpha, tiempoPasado / duracionFade);
             yield return null;
         }
-
         faderGroup.alpha = finAlpha;
     }
 
-    // Corrutina especial que hace el Fade a negro y LUEGO carga la escena
     private IEnumerator RutinaFadeYRecargar()
     {
-        // 1. Hacemos Fade In (pantalla a negro)
-        yield return StartCoroutine(RutinaFade(0f, 1f));
+        // 1. Fade a negro
+        yield return StartCoroutine(RutinaFade(faderGroup.alpha, 1f));
 
-        // 2. Opcional: Pequeña pausa con la pantalla en negro para que no sea tan brusco
-        yield return new WaitForSeconds(0.2f);
+        // 2. BLOQUEO DE SEGURIDAD: Forzamos el alfa a 1 
+        faderGroup.alpha = 1f;
 
-        // 3. Recargamos la escena actual
-        string nombreEscenaActual = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(nombreEscenaActual);
+        // 3. ESPERA EXTRA: Lo que necesitabas para que el ojo no note el salto
+        yield return new WaitForSeconds(esperaEnNegro);
+
+        // 4. CARGA: Recargamos la escena
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
