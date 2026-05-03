@@ -52,6 +52,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Size.x
+      value: 0.435124
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Size.z
+      value: 0.40974435
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Center.x
+      value: 0.0033549115
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Center.z
+      value: 0.020304473
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -73,9 +89,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5358585131638782605}
     m_Modifications:
+    - target: {fileID: 1735700770761438102, guid: 84d95fd7599da9148bfdd7c91a1bd6bf, type: 3}
+      propertyPath: m_TagString
+      value: paquetes
+      objectReference: {fileID: 0}
     - target: {fileID: 4951248219674530715, guid: 84d95fd7599da9148bfdd7c91a1bd6bf, type: 3}
       propertyPath: m_Name
       value: dice_blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 4951248219674530715, guid: 84d95fd7599da9148bfdd7c91a1bd6bf, type: 3}
+      propertyPath: m_TagString
+      value: paquetes
       objectReference: {fileID: 0}
     - target: {fileID: 5763919956664912161, guid: 84d95fd7599da9148bfdd7c91a1bd6bf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -117,7 +141,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9110161309798437880, guid: 84d95fd7599da9148bfdd7c91a1bd6bf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3250759459170835098, guid: 84d95fd7599da9148bfdd7c91a1bd6bf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

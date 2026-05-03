@@ -52,6 +52,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Size.y
+      value: 0.4865769
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Size.z
+      value: 0.26598606
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Center.y
+      value: 0.063813455
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Center.z
+      value: 0.0064406777
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -113,11 +129,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6329665571278941999, guid: caa9fa9b44b152e4dbb67b7978597ef5, type: 3}
+      propertyPath: m_TagString
+      value: paquetes
+      objectReference: {fileID: 0}
     - target: {fileID: 6425698344607842257, guid: caa9fa9b44b152e4dbb67b7978597ef5, type: 3}
       propertyPath: m_Name
       value: headphones
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6425698344607842257, guid: caa9fa9b44b152e4dbb67b7978597ef5, type: 3}
+      propertyPath: m_TagString
+      value: paquetes
+      objectReference: {fileID: 0}
+    - target: {fileID: 6497766603171916659, guid: caa9fa9b44b152e4dbb67b7978597ef5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 872513225625393157, guid: caa9fa9b44b152e4dbb67b7978597ef5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

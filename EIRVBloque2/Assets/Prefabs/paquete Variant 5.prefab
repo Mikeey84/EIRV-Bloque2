@@ -52,6 +52,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Size.x
+      value: 0.3582255
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Center.x
+      value: 0.0418042
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Center.z
+      value: 0.062484153
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -73,6 +85,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5358585131638782605}
     m_Modifications:
+    - target: {fileID: 5684306641936344256, guid: fa3df6b70bf478341a9954cb362b45b1, type: 3}
+      propertyPath: m_TagString
+      value: paquetes
+      objectReference: {fileID: 0}
     - target: {fileID: 8176543118996486322, guid: fa3df6b70bf478341a9954cb362b45b1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -113,11 +129,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8246526615834220413, guid: fa3df6b70bf478341a9954cb362b45b1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8805445510405251592, guid: fa3df6b70bf478341a9954cb362b45b1, type: 3}
       propertyPath: m_Name
       value: piggy_bank
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8805445510405251592, guid: fa3df6b70bf478341a9954cb362b45b1, type: 3}
+      propertyPath: m_TagString
+      value: paquetes
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 375380454986427435, guid: fa3df6b70bf478341a9954cb362b45b1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

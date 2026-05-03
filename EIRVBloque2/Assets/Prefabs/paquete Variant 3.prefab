@@ -52,6 +52,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Size.x
+      value: 0.60970163
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Size.y
+      value: 0.29087907
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Center.x
+      value: 0.0028836387
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Center.y
+      value: -0.034035515
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276623729492362656, guid: bd2e357e2879fd7488c3e1ec3b4264d1, type: 3}
+      propertyPath: m_Center.z
+      value: 0.062484153
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -76,6 +96,10 @@ PrefabInstance:
     - target: {fileID: 360891343128149481, guid: ed7b7ff0ba424be4cad06ee3a799fdc8, type: 3}
       propertyPath: m_Name
       value: dynamite
+      objectReference: {fileID: 0}
+    - target: {fileID: 360891343128149481, guid: ed7b7ff0ba424be4cad06ee3a799fdc8, type: 3}
+      propertyPath: m_TagString
+      value: paquetes
       objectReference: {fileID: 0}
     - target: {fileID: 1029622748199708499, guid: ed7b7ff0ba424be4cad06ee3a799fdc8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -117,7 +141,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1698037497662928310, guid: ed7b7ff0ba424be4cad06ee3a799fdc8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5711742154895849017, guid: ed7b7ff0ba424be4cad06ee3a799fdc8, type: 3}
+      propertyPath: m_TagString
+      value: paquetes
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1923741084932632818, guid: ed7b7ff0ba424be4cad06ee3a799fdc8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

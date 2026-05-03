@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 5774053257932906085}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.9999744, z: -0, w: -0.0071556414}
-  m_LocalPosition: {x: 0, y: 1.4224979, z: 0}
+  m_LocalPosition: {x: 0.02, y: 1.05, z: 0.06}
   m_LocalScale: {x: 1.3888888, y: 1.3888888, z: 1.3888888}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -208,6 +208,7 @@ MonoBehaviour:
   - {fileID: 3040434571298875912, guid: a4cc337ddd87fd8449e79fee42c57cf9, type: 3}
   - {fileID: 3040434571298875912, guid: 851cf9599ff956a40a2d5afde4ac4dab, type: 3}
   - {fileID: 3040434571298875912, guid: fcab9fccb9be8ae47b217ccccf4ad749, type: 3}
+  - {fileID: 1660767052819017190, guid: 60dce768da4a728479833f99ff773151, type: 3}
   spawnPoint: {fileID: 7898626176026290861}
   truck: {fileID: 0}
   scaleUpDuration: 0.3
@@ -327,6 +328,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8391222552659086748, guid: 37c31e2dad5c63447972faa653b2742c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2145032369333416876}
+    - targetCorrespondingSourceObject: {fileID: -8391222552659086748, guid: 37c31e2dad5c63447972faa653b2742c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6403316250280247239}
   m_SourcePrefab: {fileID: 100100000, guid: 37c31e2dad5c63447972faa653b2742c, type: 3}
 --- !u!4 &2775289580296896281 stripped
 Transform:
@@ -422,3 +426,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.2918599, y: 1.9999995, z: 1.5199122}
   m_Center: {x: -1.0208516, y: -0.000000105663105, z: 0.7599564}
+--- !u!65 &6403316250280247239
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3063879148436925078}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.0095809, y: 2, z: 0.121012405}
+  m_Center: {x: 0.008573189, y: 0.000030432228, z: 0.06050534}
