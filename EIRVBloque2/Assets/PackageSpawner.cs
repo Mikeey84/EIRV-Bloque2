@@ -4,16 +4,21 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class PackageSpawner : MonoBehaviour
 {
-    [Header("Configuración")]
+    [Header("Configuraciï¿½n")]
     public GameObject packagePrefab;        // Tu prefab del paquete
     public Transform spawnPoint;            // Donde aparece el nuevo paquete
 
-    [Header("Animación de spawn")]
-    public float scaleUpDuration = 0.3f;    // Tiempo de animación de aparición
+    [Header("Animaciï¿½n de spawn")]
+    public float scaleUpDuration = 0.3f;    // Tiempo de animaciï¿½n de apariciï¿½n
 
     private GameObject currentPackage;
 
     void Start()
+    {
+        //SpawnPackage();
+    }
+
+    void Update()
     {
         SpawnPackage();
     }
@@ -31,7 +36,7 @@ public class PackageSpawner : MonoBehaviour
             grab.selectEntered.AddListener(OnPackageGrabbed);
         }
 
-        // Animación de aparición
+        // Animaciï¿½n de apariciï¿½n
         StartCoroutine(ScaleUp(currentPackage));
     }
 
@@ -47,7 +52,7 @@ public class PackageSpawner : MonoBehaviour
         // El paquete actual ya no es "el de la furgoneta"
         currentPackage = null;
 
-        // Instanciar uno nuevo tras un pequeño delay
+        // Instanciar uno nuevo tras un pequeï¿½o delay
         StartCoroutine(SpawnAfterDelay(0.5f));
     }
 

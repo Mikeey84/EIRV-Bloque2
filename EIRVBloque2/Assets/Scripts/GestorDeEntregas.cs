@@ -1,71 +1,93 @@
 using UnityEngine;
-using TMPro; // Necesario para controlar el texto LED
+using TMPro;
 using System.Collections;
 
-public class GestorDeEntregas : MonoBehaviour
+public class GestorDeEntregasFlow : MonoBehaviour
 {
-    [SerializeField]
-    private int puntos = 0;
+    [Header("Puntuación")]
+    public int puntos = 0;
     
-    [SerializeField]
-    private TextMeshPro textoPuntuacion; // Arrastra aquí el texto de tu pantalla LED
+    [Header("Referencias UI")]
+    // Cambia a TextMeshPro si usas texto 3D puro, mantén UGUI si usas Canvas
+    public TextMeshProUGUI textoPuntuacion; 
     
-    [SerializeField]
-    private float escalaImpacto = 1.2f; // Tamaño al que crece
-    [SerializeField]
-    private float duracionAnimacion = 0.1f;
+    [Header("Configuración de Animación (Flow)")]
+    // Cuánto crecerá (1.0 = normal, 1.3 = 30% más grande)
+    public float multiplicadorEscalaMax = 1.3f; 
+    // Cuánto tardará la animación completa (subir y bajar)
+    public float duracionAnimacion = 0.25f; 
+
+    // CRUCIAL: Definiremos la forma del movimiento en el Inspector
+    [Tooltip("Dibuja una curva que suba y baje. Eje X=Tiempo(0-1), Eje Y=Intensidad(0-1)")]
+    public AnimationCurve curvaDePunch;
+
     private Vector3 escalaOriginal;
+    private Vector3 escalaMaxima;
+    private Coroutine corrutinaAnimacion;
 
     private void Start()
     {
-        // Guardamos la escala inicial del objeto de texto
         if (textoPuntuacion != null)
         {
             escalaOriginal = textoPuntuacion.transform.localScale;
-            ActualizarInterfaz();
+            // Pre-calculamos la escala máxima para ahorrar CPU
+            escalaMaxima = escalaOriginal * multiplicadorEscalaMax;
+            ActualizarTextoInterfaz(false);
         }
     }
 
     private void OnTriggerEnter(Collider otroObjeto)
     {
+        // Asegúrate de que el paquete tiene el Tag exacto "paquetes"
         if (otroObjeto.CompareTag("paquetes"))
         {
-            // Sumamos 1 punto
-            puntos += 1;
-
-            // Feedback en consola
-            Debug.Log("¡Paquete entregado! Puntos totales: " + puntos);
-
-            // Actualizamos la pantalla y lanzamos la animación
-            ActualizarInterfaz();
-            
-            // Destruimos el paquete
+            SumarPuntos(100); // Ejemplo arcade: 100 puntos
             Destroy(otroObjeto.gameObject);
         }
     }
 
-    void ActualizarInterfaz()
+    public void SumarPuntos(int cantidad)
+    {
+        puntos += cantidad;
+        ActualizarTextoInterfaz(true);
+    }
+
+    void ActualizarTextoInterfaz(bool animar)
     {
         if (textoPuntuacion != null)
         {
-            // Cambiamos el texto
             textoPuntuacion.text = puntos.ToString();
-            
-            // Lanzamos el efecto visual de "golpe"
-            StopAllCoroutines(); // Por si entran dos paquetes muy rápido
-            StartCoroutine(EfectoPunch());
+
+            if (animar)
+            {
+                // Si ya se estaba animando, la paramos para empezar de nuevo
+                if (corrutinaAnimacion != null) StopCoroutine(corrutinaAnimacion);
+                corrutinaAnimacion = StartCoroutine(EfectoPunchSmooth());
+            }
         }
     }
 
-    IEnumerator EfectoPunch()
+    IEnumerator EfectoPunchSmooth()
     {
-        // Crece de golpe
-        textoPuntuacion.transform.localScale = escalaOriginal * escalaImpacto;
-        
-        // Espera un instante
-        yield return new WaitForSeconds(duracionAnimacion);
-        
-        // Vuelve a su tamaño normal
+        float tiempoTranscurrido = 0f;
+
+        while (tiempoTranscurrido < duracionAnimacion)
+        {
+            tiempoTranscurrido += Time.deltaTime;
+            
+            // Calculamos el progreso de 0 a 1
+            float progresoFormateado = tiempoTranscurrido / duracionAnimacion;
+
+            // EVALUAMOS LA CURVA: Esta es la magia del "Flow"
+            float valorCurva = curvaDePunch.Evaluate(progresoFormateado);
+
+            // APLICAMOS LERP: Interpolamos entre la escala original y la max usando el valor de la curva
+            textoPuntuacion.transform.localScale = Vector3.LerpUnclamped(escalaOriginal, escalaMaxima, valorCurva);
+
+            yield return null; // Esperamos al siguiente frame
+        }
+
+        // Aseguramos que termine exactamente en la escala original
         textoPuntuacion.transform.localScale = escalaOriginal;
     }
 }
