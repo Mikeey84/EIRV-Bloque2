@@ -16,6 +16,7 @@ public class CanvaManager : MonoBehaviour
     [Header("Audio")]
     private AudioSource reproductorAudio;
     public AudioSource reproductorAudio2;
+    public AudioSource reproductorAudio3;
 
 
     private void Awake()
@@ -52,6 +53,7 @@ public class CanvaManager : MonoBehaviour
         canvaJuego.SetActive(true);
         canvaFinal.SetActive(false);
         reproductorAudio2.Play();
+        reproductorAudio3.Play();
         // 3. Arrancamos los coches
         foreach (CarAI objeto in objetosJuego)
         {
