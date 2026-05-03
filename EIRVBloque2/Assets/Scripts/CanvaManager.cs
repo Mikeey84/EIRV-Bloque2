@@ -51,7 +51,7 @@ public class CanvaManager : MonoBehaviour
         canvaInicio.SetActive(false);
         canvaJuego.SetActive(true);
         canvaFinal.SetActive(false);
-        reproductorAudio.Play();
+        reproductorAudio2.Play();
         // 3. Arrancamos los coches
         foreach (CarAI objeto in objetosJuego)
         {

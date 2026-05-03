@@ -84,7 +84,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 460e03467a17bde4280d6a8d4046b452, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -471,6 +471,10 @@ PrefabInstance:
       propertyPath: textoPuntuacion
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8516880925306798005, guid: 743fdcda40c06614b86cf0c38390f369, type: 3}
+      propertyPath: reproductorAudio
+      value: 
+      objectReference: {fileID: -1449312148981902249}
     - target: {fileID: 8516880925306798005, guid: 743fdcda40c06614b86cf0c38390f369, type: 3}
       propertyPath: duracionAnimacion
       value: 0.25
